@@ -46,21 +46,14 @@ async def ask_agent(
 ):
 
     # --------------------------------------------------------
-    # VENV PYTHON
+    # PYTHON EXECUTABLE
     # --------------------------------------------------------
+    # Use the Python interpreter that is currently running
+    # the application.
+    #
+    # This works both locally and on Streamlit Cloud.
 
-    venv_python = (
-        PROJECT_ROOT
-        / "venv"
-        / "Scripts"
-        / "python.exe"
-    )
-
-    if not venv_python.exists():
-
-        venv_python = Path(
-            sys.executable
-        )
+    python_executable = sys.executable
 
 
     # --------------------------------------------------------
@@ -69,9 +62,7 @@ async def ask_agent(
 
     server_params = StdioServerParameters(
 
-        command=str(
-            venv_python
-        ),
+        command=python_executable,
 
         args=[
             "-m",
@@ -138,9 +129,11 @@ async def ask_agent(
             gemini_tools = [
 
                 types.Tool(
+
                     function_declarations=(
                         function_declarations
                     )
+
                 )
 
             ]
@@ -153,18 +146,22 @@ async def ask_agent(
             if document_name:
 
                 document_instruction = f"""
+
 The user selected this PDF:
 
 {document_name}
 
 You MUST retrieve information ONLY
 from this document.
+
 """
 
             else:
 
                 document_instruction = """
+
 Use the available document knowledge base.
+
 """
 
 
@@ -197,6 +194,7 @@ Use the available document knowledge base.
             # =================================================
 
             retrieval_prompt = f"""
+
 You are an intelligent document research assistant.
 
 {document_instruction}
@@ -226,6 +224,7 @@ Use this exact document name:
 {document_name if document_name else ""}
 
 Do not repeatedly retrieve documents.
+
 """
 
 
@@ -356,6 +355,7 @@ Do not repeatedly retrieve documents.
             # =================================================
 
             final_prompt = f"""
+
 You are an AI document research assistant.
 
 Answer the user's question using ONLY
@@ -387,6 +387,7 @@ Rules:
 6. Mention page numbers when available.
 7. Mention the document name when useful.
 8. Keep the answer clear and structured.
+
 """
 
 
@@ -429,9 +430,11 @@ async def main():
         "\n======================================"
     )
 
+
     print(
         "       AGENTIC RAG + MCP"
     )
+
 
     print(
         "======================================"
@@ -439,8 +442,10 @@ async def main():
 
 
     document_name = input(
+
         "\nPDF name "
         "(Enter for all documents): "
+
     )
 
 
@@ -450,7 +455,9 @@ async def main():
 
 
     question = input(
+
         "\nAsk your question: "
+
     )
 
 
@@ -472,13 +479,16 @@ async def main():
         "\n======================================"
     )
 
+
     print(
         "FINAL ANSWER"
     )
 
+
     print(
         "======================================"
     )
+
 
     print(
         result["answer"]
