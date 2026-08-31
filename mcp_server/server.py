@@ -68,7 +68,6 @@ def retrieve_documents_tool(
         document_name=document_name
     )
 
-
     if not results:
 
         return (
@@ -76,14 +75,11 @@ def retrieve_documents_tool(
             "in the selected document."
         )
 
-
     output = []
-
 
     for i, result in enumerate(results):
 
         output.append(
-
             f"""
 --- Retrieved Chunk {i + 1} ---
 
@@ -96,9 +92,7 @@ Page:
 Content:
 {result['text']}
 """
-
         )
-
 
     return "\n".join(output)
 
@@ -170,4 +164,28 @@ def check_relevance_tool(
 
 if __name__ == "__main__":
 
-    mcp.run()
+    try:
+
+        print(
+            "MCP Server starting...",
+            file=sys.stderr,
+            flush=True
+        )
+
+        mcp.run()
+
+    except Exception as e:
+
+        print(
+            "\nMCP SERVER ERROR:",
+            file=sys.stderr,
+            flush=True
+        )
+
+        import traceback
+
+        traceback.print_exc(
+            file=sys.stderr
+        )
+
+        raise
