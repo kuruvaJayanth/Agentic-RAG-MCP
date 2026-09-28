@@ -2,14 +2,12 @@
 name = "agentic-rag-mcp"
 version = "1.0.0"
 requires-python = ">=3.12"
+
 dependencies = [
     "fastapi",
     "uvicorn",
-    "chromadb",
-    "sentence-transformers",
-    "pypdf",
-    "mcp",
     "google-genai",
     "python-dotenv",
-    "python-multipart"
+    "python-multipart",
+    "pypdf"
 ]
