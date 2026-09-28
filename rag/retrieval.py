@@ -1,6 +1,5 @@
 import sys
 from pathlib import Path
-import hashlib
 
 import chromadb
 from sentence_transformers import SentenceTransformer
@@ -35,23 +34,6 @@ chroma_client = chromadb.PersistentClient(
 
 
 # ============================================================
-# DOCUMENT COLLECTION
-# ============================================================
-
-def get_document_collection(document_name):
-
-    document_hash = hashlib.md5(
-        document_name.encode("utf-8")
-    ).hexdigest()[:12]
-
-    collection_name = f"doc_{document_hash}"
-
-    return chroma_client.get_or_create_collection(
-        name=collection_name
-    )
-
-
-# ============================================================
 # RETRIEVE DOCUMENTS
 # ============================================================
 
@@ -61,88 +43,67 @@ def retrieve_documents(
     document_name=None
 ):
 
-    # --------------------------------------------------------
-    # Select collection
-    # --------------------------------------------------------
-
-    if document_name:
-
-        collection = get_document_collection(
-            document_name
-        )
-
-    else:
-
-        collection = chroma_client.get_or_create_collection(
-            name="documents"
-        )
-
-
-    # --------------------------------------------------------
-    # Check collection
-    # --------------------------------------------------------
+    collection = chroma_client.get_or_create_collection(
+        name="documents"
+    )
 
     if collection.count() == 0:
         return []
 
-
     # --------------------------------------------------------
-    # Create query embedding
+    # Query embedding
     # --------------------------------------------------------
 
     query_embedding = embedding_model.encode(
         query
     ).tolist()
 
+    # --------------------------------------------------------
+    # Build metadata filter
+    # --------------------------------------------------------
+
+    query_kwargs = {
+        "query_embeddings": [query_embedding],
+        "n_results": min(top_k, collection.count())
+    }
+
+    # If a document is selected, ask ChromaDB directly
+    # for chunks belonging to that document.
+    if document_name:
+        query_kwargs["where"] = {
+            "source": document_name
+        }
 
     # --------------------------------------------------------
     # Search
     # --------------------------------------------------------
 
-    n_results = min(
-        top_k,
-        collection.count()
-    )
-
     results = collection.query(
-        query_embeddings=[
-            query_embedding
-        ],
-        n_results=n_results
+        **query_kwargs
     )
-
 
     retrieved_documents = []
-
 
     if not results.get("documents"):
         return retrieved_documents
 
-
     documents = results["documents"][0]
-
     metadatas = results["metadatas"][0]
-
 
     for i, document in enumerate(documents):
 
         metadata = metadatas[i] or {}
 
         retrieved_documents.append({
-
             "text": document,
-
             "source": metadata.get(
                 "source",
                 "Unknown"
             ),
-
             "page": metadata.get(
                 "page",
                 "Unknown"
             )
-
         })
-
 
     return retrieved_documents

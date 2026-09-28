@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="AI-powered research assistant using Agentic RAG, MCP, Gemini and semantic document search."
+    >
+
+    <title>RAG Research — Intelligent Document Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+    <!-- Background -->
+    <div class="background">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="grid"></div>
+    </div>
+
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <div class="nav-container">
+
+            <a href="#" class="brand">
+
+                <div class="brand-mark">
+                    <span>R</span>
+                </div>
+
+                <div class="brand-text">
+                    <strong>RAG Research</strong>
+                    <span>Intelligent Research Assistant</span>
+                </div>
+
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="#workspace">
+                    Workspace
+                </a>
+
+                <a href="#how-it-works">
+                    How it works
+                </a>
+
+                <a
+                    href="https://github.com/kuruvaJayanth/Agentic-RAG-MCP"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub ↗
+                </a>
+
+            </nav>
+
+
+            <div class="status-pill">
+                <span class="status-dot"></span>
+                <span>AI Online</span>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- Main -->
+    <main>
+
+
+        <!-- Hero -->
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="eyebrow">
+                    <span class="eyebrow-line"></span>
+
+                    AI-POWERED DOCUMENT RESEARCH
+
+                    <span class="eyebrow-line"></span>
+                </div>
+
+
+                <h1>
+                    Turn research papers into
+                    <span class="gradient-text">
+                        intelligent answers.
+                    </span>
+                </h1>
+
+
+                <p class="hero-description">
+                    Upload documents, ask questions and get
+                    context-grounded answers using semantic retrieval,
+                    Agentic RAG, MCP and Gemini.
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <a
+                        href="#workspace"
+                        class="primary-button"
+                    >
+                        Start researching
+
+                        <span class="button-arrow">
+                            ↓
+                        </span>
+                    </a>
+
+
+                    <a
+                        href="#how-it-works"
+                        class="secondary-button"
+                    >
+                        Explore how it works
+                    </a>
+
+                </div>
+
+
+                <div class="tech-strip">
+
+                    <span>RAG</span>
+                    <span class="separator">•</span>
+
+                    <span>MCP</span>
+                    <span class="separator">•</span>
+
+                    <span>Gemini</span>
+                    <span class="separator">•</span>
+
+                    <span>ChromaDB</span>
+                    <span class="separator">•</span>
+
+                    <span>Semantic Search</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Workspace -->
+        <section
+            class="workspace-section"
+            id="workspace"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <div class="section-label">
+                        RESEARCH WORKSPACE
+                    </div>
+
+                    <h2>
+                        Ask your documents.
+                    </h2>
+
+                </div>
+
+                <div class="workspace-status">
+                    <span class="status-dot"></span>
+                    Ready for research
+                </div>
+
+            </div>
+
+
+            <div class="workspace-card">
+
+
+                <!-- Workspace Header -->
+                <div class="workspace-header">
+
+                    <div class="workspace-title">
+
+                        <div class="workspace-icon">
+                            ✦
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Research Assistant
+                            </h3>
+
+                            <p>
+                                Upload a document or select an existing one.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="secure-badge">
+                        <span>●</span>
+                        Context grounded
+                    </div>
+
+                </div>
+
+
+
+                <!-- Upload -->
+                <div class="input-group">
+
+                    <label>
+                        UPLOAD DOCUMENT
+                    </label>
+
+                    <div
+                        id="uploadArea"
+                        class="upload-area"
+                    >
+
+                        <input
+                            type="file"
+                            id="pdfInput"
+                            accept=".pdf,application/pdf"
+                            hidden
+                        >
+
+                        <div class="upload-icon">
+                            ↑
+                        </div>
+
+                        <div class="upload-content">
+
+                            <strong>
+                                Upload a PDF
+                            </strong>
+
+                            <span>
+                                Drag & drop your document here or
+                                <button
+                                    type="button"
+                                    id="chooseFileButton"
+                                    class="upload-link"
+                                >
+                                    browse files
+                                </button>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="selectedFile"
+                        class="selected-file hidden"
+                    >
+
+                        <div class="selected-file-icon">
+                            PDF
+                        </div>
+
+                        <div class="selected-file-info">
+
+                            <strong id="selectedFileName">
+                                document.pdf
+                            </strong>
+
+                            <span id="selectedFileSize">
+                                0 KB
+                            </span>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="uploadButton"
+                            class="upload-button"
+                        >
+                            Upload & Index
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="uploadStatus"
+                        class="upload-status hidden"
+                    >
+                    </div>
+
+
+                    <p class="input-hint">
+                        Upload a PDF to extract, index and search its contents.
+                    </p>
+
+                </div>
+
+
+
+                <!-- Document -->
+                <div class="input-group">
+
+                    <label for="document">
+                        DOCUMENT
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <select id="document">
+
+                            <option value="">
+                                Select a research document
+                            </option>
+
+                        </select>
+
+                        <span class="select-arrow">
+                            ↓
+                        </span>
+
+                    </div>
+
+                    <p class="input-hint">
+                        Choose the document you want to research.
+                    </p>
+
+                </div>
+
+
+
+                <!-- Question -->
+                <div class="input-group">
+
+                    <div class="label-row">
+
+                        <label for="question">
+                            YOUR QUESTION
+                        </label>
+
+                        <span class="character-count">
+                            0 / 500
+                        </span>
+
+                    </div>
+
+
+                    <div class="question-wrapper">
+
+                        <textarea
+                            id="question"
+                            maxlength="500"
+                            rows="5"
+                            placeholder="Ask something about this document..."
+                        ></textarea>
+
+                    </div>
+
+                    <p class="input-hint">
+                        Ask about methodology, objectives, findings,
+                        datasets, limitations or other details.
+                    </p>
+
+                </div>
+
+
+
+                <!-- Action -->
+                <div class="workspace-action">
+
+                    <button
+                        id="askButton"
+                        class="ask-button"
+                    >
+
+                        <span class="ask-icon">
+                            ✦
+                        </span>
+
+                        <span>
+                            Ask AI
+                        </span>
+
+                        <span class="ask-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Results -->
+        <section
+            class="results-section"
+            id="results"
+        >
+
+            <div class="results-grid">
+
+
+                <!-- Answer -->
+                <div class="answer-card">
+
+                    <div class="card-header">
+
+                        <div class="card-heading">
+
+                            <div class="card-icon answer-icon">
+                                ✦
+                            </div>
+
+                            <div>
+
+                                <span class="card-label">
+                                    AI RESPONSE
+                                </span>
+
+                                <h3>
+                                    Grounded answer
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <span
+                            id="answerStatus"
+                            class="result-badge"
+                        >
+                            Waiting
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="answerContent"
+                        class="answer-content empty-state"
+                    >
+
+                        <div class="empty-icon">
+                            ◇
+                        </div>
+
+                        <h4>
+                            Your answer will appear here
+                        </h4>
+
+                        <p>
+                            Select a document and ask a question
+                            to start your research.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Sources -->
+                <div class="sources-card">
+
+                    <div class="card-header">
+
+                        <div class="card-heading">
+
+                            <div class="card-icon source-icon">
+                                ◈
+                            </div>
+
+                            <div>
+
+                                <span class="card-label">
+                                    REFERENCES
+                                </span>
+
+                                <h3>
+                                    Sources
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <span
+                            id="sourceCount"
+                            class="result-badge"
+                        >
+                            0 sources
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="sourcesContent"
+                        class="sources-content"
+                    >
+
+                        <div class="empty-state small">
+
+                            <div class="empty-icon">
+                                ◈
+                            </div>
+
+                            <p>
+                                Retrieved document sources
+                                will appear here.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- How it works -->
+        <section
+            class="how-section"
+            id="how-it-works"
+        >
+
+            <div class="section-heading centered">
+
+                <div class="section-label">
+                    UNDER THE HOOD
+                </div>
+
+                <h2>
+                    From document to answer.
+                </h2>
+
+                <p>
+                    A retrieval-first architecture designed to
+                    keep responses grounded in your documents.
+                </p>
+
+            </div>
+
+
+            <div class="architecture">
+
+
+                <div class="architecture-step">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <div class="step-icon">
+                        ▣
+                    </div>
+
+                    <h3>
+                        Upload
+                    </h3>
+
+                    <p>
+                        Your PDF is extracted, chunked and
+                        converted into searchable knowledge.
+                    </p>
+
+                </div>
+
+
+                <div class="architecture-line"></div>
+
+
+                <div class="architecture-step">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <div class="step-icon">
+                        ◇
+                    </div>
+
+                    <h3>
+                        Retrieval
+                    </h3>
+
+                    <p>
+                        Semantic search finds the most
+                        relevant document context.
+                    </p>
+
+                </div>
+
+
+                <div class="architecture-line"></div>
+
+
+                <div class="architecture-step">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <div class="step-icon">
+                        ⚙
+                    </div>
+
+                    <h3>
+                        MCP
+                    </h3>
+
+                    <p>
+                        Tools provide structured access
+                        to the research workflow.
+                    </p>
+
+                </div>
+
+
+                <div class="architecture-line"></div>
+
+
+                <div class="architecture-step">
+
+                    <div class="step-number">
+                        04
+                    </div>
+
+                    <div class="step-icon">
+                        ✦
+                    </div>
+
+                    <h3>
+                        Gemini
+                    </h3>
+
+                    <p>
+                        Retrieved context is transformed
+                        into a clear grounded response.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Footer -->
+        <footer class="footer">
+
+            <div class="footer-inner">
+
+                <div class="footer-brand">
+
+                    <div class="brand-mark small">
+                        <span>R</span>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            RAG Research
+                        </strong>
+
+                        <p>
+                            Intelligent document research.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="footer-tech">
+
+                    Built with
+
+                    <span>FastAPI</span>
+                    <span>•</span>
+                    <span>ChromaDB</span>
+                    <span>•</span>
+                    <span>Gemini</span>
+                    <span>•</span>
+                    <span>MCP</span>
+
+                </div>
+
+            </div>
+
+        </footer>
+
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
