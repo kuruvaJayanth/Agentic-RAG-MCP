@@ -9,5 +9,6 @@ dependencies = [
     "google-genai",
     "python-dotenv",
     "python-multipart",
-    "pypdf"
+    "pypdf",
+    "upstash-vector"
 ]
